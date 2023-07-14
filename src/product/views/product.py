@@ -13,6 +13,7 @@ class CreateProductView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(CreateProductView, self).get_context_data(**kwargs)
         variants = Variant.objects.filter(active=True).values('id', 'title')
+        print(context)
         context['product'] = True
         context['variants'] = list(variants.all())
         context['filter_form'] = ProductFilterForm(self.request.GET)

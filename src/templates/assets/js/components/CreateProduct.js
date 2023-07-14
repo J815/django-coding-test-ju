@@ -78,6 +78,31 @@ const CreateProduct = (props) => {
     let saveProduct = (event) => {
         event.preventDefault();
         // TODO : write your code here to save the product
+        const productName = document.getElementById('productName').value;
+        const productSKU = document.getElementById('productSKU').value;
+        const description = document.getElementById('description').value;
+        const product_image = document.getElementById('image').value;
+        
+        
+        const formData = {
+          name: productName,
+          sku: productSKU,
+          description: description,
+          product_image: product_image,
+          productVariant: productVariant,
+          productVariantPrices: productVariantPrices
+        
+       };
+
+       try {
+        // Send the POST request to your Django backend
+        const response = await axios.post('http://127.0.0.1:8000/api/products/', formData);
+        // Handle the response, e.g., show success message, redirect, etc.
+        console.log(response.data);
+      } catch (error) {
+    // Handle errors, e.g., show error message
+      console.log(error);
+     }
     }
 
 
@@ -90,15 +115,15 @@ const CreateProduct = (props) => {
                             <div className="card-body">
                                 <div className="form-group">
                                     <label htmlFor="">Product Name</label>
-                                    <input type="text" placeholder="Product Name" className="form-control"/>
+                                    <input type="text" id='productName' placeholder="Product Name" className="form-control"/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="">Product SKU</label>
-                                    <input type="text" placeholder="Product Name" className="form-control"/>
+                                    <input type="text" id='productSKU' placeholder="Product Name" className="form-control"/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="">Description</label>
-                                    <textarea id="" cols="30" rows="4" className="form-control"></textarea>
+                                    <textarea id="description" cols="30" rows="4" className="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -113,7 +138,7 @@ const CreateProduct = (props) => {
                                     {({getRootProps, getInputProps}) => (
                                         <section>
                                             <div {...getRootProps()}>
-                                                <input {...getInputProps()} />
+                                                <input id='image' {...getInputProps()} />
                                                 <p>Drag 'n' drop some files here, or click to select files</p>
                                             </div>
                                         </section>
@@ -161,7 +186,7 @@ const CreateProduct = (props) => {
                                                         }
 
                                                         <section style={{marginTop: "30px"}}>
-                                                            <TagsInput value={element.tags}
+                                                            <TagsInput  value={element.tags}
                                                                        style="margin-top:30px"
                                                                        onChange={(value) => handleInputTagOnChange(value, index)}/>
                                                         </section>
